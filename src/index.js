@@ -1,3 +1,5 @@
+import "./styles.css";
+
 class Task {
     constructor(name, description = '', priority = 4, project = 'My Tasks', duedate, labels = [], isComplete = false){
         this.name = name;
