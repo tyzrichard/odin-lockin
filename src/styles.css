@@ -62,6 +62,10 @@ body {
     background-color: #030712;
 }
 
+#content {
+    padding: 40px 100px;
+}
+
 h1 {
     font-size: 28px;
     font-weight: 900;
@@ -151,4 +155,8 @@ h2 {
 .main-option:hover,
 .project:hover {
     background-color: rgba(154, 52, 18, 25%);
+}
+
+li {
+    color: white;
 }
