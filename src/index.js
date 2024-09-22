@@ -1,5 +1,7 @@
 import "./styles.css";
 
+// Todolist Logic
+
 class Task {
     constructor(name, description = '', priority = 4, project = 'My Tasks', duedate, labels = [], isComplete = false){
         this.name = name;
@@ -111,3 +113,38 @@ console.log('Tasks for 2024-09-20:', tasksForToday);
 // Get all tasks across all days
 const allDays = todoList.getAllDays();
 console.log('All days in the todo list:', allDays);
+
+// Styling Logic
+const mainOptions = document.querySelectorAll(".main-option");
+const projects = document.querySelectorAll(".project");
+
+const mainOptionsAndProjects = [...mainOptions, ...projects];
+
+function resetOptionColours() {
+    mainOptionsAndProjects.forEach((option) => {
+        option.style.color = "#FFFFFF";
+        const svg = option.querySelector("svg");
+        if (svg) {
+            const svgElements = svg.querySelectorAll("path, circle, rect, polygon");
+            svgElements.forEach((element) => {
+                element.setAttribute("fill", "#FFFFFF");
+            });
+        }
+        option.style["background-color"] = "";
+    })
+}
+
+mainOptionsAndProjects.forEach((option) => {
+    option.addEventListener("click", () => {
+        resetOptionColours();
+        option.style.color = "#FB923C";
+        const svg = option.querySelector("svg");
+        if (svg) {
+            const svgElements = svg.querySelectorAll("path, circle, rect, polygon");
+            svgElements.forEach((element) => {
+                element.setAttribute("fill", "#FB923C");
+            });
+        }
+        option.style["background-color"] = "rgba(154, 52, 18, 40%)";
+    });
+});
