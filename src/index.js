@@ -20,14 +20,14 @@ document.addEventListener('DOMContentLoaded', () => {
             formValues.push(value);
         });
 
-        addTask(formValues[0], formValues[1]);
-        renderTasks();
         dialog.close();
+        addTask(formValues[0], formValues[1], formValues[2]);
+        renderTasks();
     })
 
     addNewTaskButton.addEventListener("click", () => {
         dialog.showModal();
-        form.reset();
+        //form.reset();
     });
 
     closeButton.addEventListener('click', () => {
