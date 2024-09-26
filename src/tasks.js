@@ -5,27 +5,104 @@ class Task {
         this.duedate = duedate
         this.isComplete = isComplete;
     }
-    
+
     // Complete the task
     completeTask() {
         this.isComplete = true;
     }
+
+    updateTask(name, description, duedate) {
+        this.name = name;
+        this.description = description;
+        this.duedate = duedate;
+    }
 }
 
-let tasks = [];
+class Day {
+    constructor(date) {
+        this.date = date;
+        this.tasks = [];
+    }
 
-function addTask(taskName, desc, duedate) {
-    const newTask = new Task(taskName, desc, duedate);
-    tasks.push(newTask);
-    console.log(tasks)
+    addTask(task) {
+        this.tasks.push(task);
+    }
+
+    removeTask(taskName) {
+        this.tasks = this.tasks.filter(task => task.name !== taskName);
+    }
+
+    getAllTasks() {
+        return this.tasks;
+    }
 }
 
-function removeTask(taskName) {
-    tasks = tasks.filter(task => task.name !== taskName);
+class TodoList {
+    constructor() {
+        this.days = [];
+    }
+
+    addDay(day) {
+        this.days.push(day);
+    }
+
+    findDay(date) {
+        return this.days.find(day => day.date === date);
+    }
+
+    addTaskToDay(date, task) {
+        let day = this.findDay(date);
+        if (!day) {
+            day = new Day(date);
+            this.addDay(day);
+        }
+        day.addTask(task);
+    }
+
+    checkAndRemoveDay(date) {
+        let day = this.findDay(date);
+        if (day.tasks.length == 0) {
+            this.days = this.days.filter(date => date.date !== day.date);
+        }
+    }
+
+    removeTaskFromDay(day, task) {
+        if (day) {
+            day.removeTask(task.name);
+        }
+        this.checkAndRemoveDay(day.date);
+        console.log(this.getAllDays());
+    }
+
+    getTasksByDay(date) {
+        const day = this.findDay(date);
+        return day ? day.getTasks() : [];
+    }
+
+    getAllDays() {
+        return this.days;
+    }
 }
+
+const todolist = new TodoList();
+const task1 = new Task("task 1", "my first task", '2024-09-20');
+const task2 = new Task("task 2", "my second task", '2024-09-22');
+todolist.addTaskToDay(task1.duedate, task1);
+todolist.addTaskToDay(task2.duedate, task2);
+
+
+// function addTask(taskName, desc, duedate) {
+//     const newTask = new Task(taskName, desc, duedate);
+//     tasks.push(newTask);
+//     console.log(tasks)
+// }
+
+// function removeTask(taskName) {
+//     todolist = tasks.filter(task => task.name !== taskName);
+// }
 
 // Export tasks array and the removeTask function
-export { tasks, addTask, removeTask };
+export { todolist };
 
 
 // // Todolist Logic

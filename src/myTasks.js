@@ -1,22 +1,39 @@
 // myTasks.js
-import { tasks, removeTask } from './tasks.js';
+import { todolist } from './tasks.js';
 
 // Function to render tasks in the DOM
 function renderTasks() {
-    const taskContainer = document.getElementById('content');
-    taskContainer.innerHTML = '';  // Clear the previous task list
+    const listContainer = document.getElementById('content');
+    listContainer.innerHTML = '';  // Clear the previous task list
 
-    tasks.forEach((task) => {
+    const todolistDays = todolist.getAllDays();
+
+    todolistDays.forEach((day) => {
+        const dayContainer = document.createElement('div');
+        const dayItem = document.createElement('p');
+        dayItem.textContent = `${day.date}`;
+        dayContainer.appendChild(dayItem);
+        const taskContainer = document.createElement('div');
+        addTasksToDay(day, taskContainer);
+        dayContainer.appendChild(taskContainer);
+        listContainer.appendChild(dayContainer)
+    })
+}
+
+function addTasksToDay(day, taskContainer) {
+    const dayTasks = day.getAllTasks();
+    
+    dayTasks.forEach((task) => {
         // Create task item
         const taskItem = document.createElement('li');
-        taskItem.textContent = `${task.name}: ${task.description}: ${task.duedate}`;
+        taskItem.textContent = `${task.name}: ${task.description}`;
 
         // Create remove button
         const removeButton = document.createElement('button');
         removeButton.textContent = 'Remove';
         removeButton.addEventListener('click', () => {
             // Remove task from tasks array
-            removeTask(task.name);
+            todolist.removeTaskFromDay(day, task);
 
             // Re-render the task list
             renderTasks();

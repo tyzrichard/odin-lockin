@@ -1,5 +1,5 @@
 import "./styles.css";
-import { addTask } from "./tasks.js";
+import { todolist } from "./tasks.js";
 import { renderTasks } from './myTasks.js';
 
 document.addEventListener('DOMContentLoaded', () => {
