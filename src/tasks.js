@@ -16,9 +16,15 @@ let tasks = [
     new Task('Complete project', 'Finish and deploy the app'),
 ];
 
+function addTask(taskName, desc) {
+    const newTask = new Task(taskName, desc);
+    tasks.push(newTask);
+    console.log(tasks)
+}
+
 function removeTask(taskName) {
     tasks = tasks.filter(task => task.name !== taskName);
 }
 
 // Export tasks array and the removeTask function
-export { tasks, removeTask };
+export { tasks, addTask, removeTask };

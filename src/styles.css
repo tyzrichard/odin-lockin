@@ -120,6 +120,22 @@ h2 {
     width: 28px;
 }
 
+dialog {
+    flex-direction: column;
+    border-width: 0;
+    border-radius: 30px;
+    width: max(400px, 50%);
+    font-size: 16px;
+    gap: 15px;
+    padding: 30px;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -ms-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+}
+
 .projects {
     display: flex;
     flex-direction: column;

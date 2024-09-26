@@ -1,10 +1,40 @@
 import "./styles.css";
+import { addTask } from "./tasks.js";
 import { renderTasks } from './myTasks.js';
 
-// Sample initialization to render tasks
 document.addEventListener('DOMContentLoaded', () => {
     renderTasks();  // Render tasks on page load
+
+    // Dialog to add new Task
+    const dialog = document.querySelector("dialog");
+    const form = document.querySelector("form");
+    const addNewTaskButton = document.querySelector(".new-task");
+    const closeButton = document.querySelector(".closeDialog");
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault(); // Prevent the default form submission behavior
+
+        const formData = new FormData(form);
+        const formValues = [];
+        formData.forEach((value) => {
+            formValues.push(value);
+        });
+
+        addTask(formValues[0], formValues[1]);
+        renderTasks();
+        dialog.close();
+    })
+
+    addNewTaskButton.addEventListener("click", () => {
+        dialog.showModal();
+        form.reset();
+    });
+
+    closeButton.addEventListener('click', () => {
+        dialog.close();
+    });
 });
+
 
 // Styling Logic
 const mainOptions = document.querySelectorAll(".main-option");
