@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     addNewTaskButton.addEventListener("click", () => {
         dialog.showModal();
-        //form.reset();
+        form.reset();
     });
 
     closeButton.addEventListener('click', () => {
