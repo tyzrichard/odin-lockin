@@ -1,5 +1,5 @@
 import { todolist } from './tasks.js';
-import { differenceInDays, format, isPast, isToday, isTomorrow, startOfToday} from "date-fns";
+import { differenceInDays, format, isPast, isToday, isTomorrow, startOfToday } from "date-fns";
 
 // Function to render tasks in the DOM
 function renderTasks() {
@@ -10,52 +10,85 @@ function renderTasks() {
 
     todolistDays.forEach((day) => {
         const dayContainer = document.createElement('div');
-        const dayItem = document.createElement('p');
+        dayContainer.classList.add('day-container')
+        const dayHeader = document.createElement('div');
+        dayHeader.classList.add('day-header');
+
+        function addDueTasks(due) {
+            const dueTasks = day.getNumberOfTasks();
+            if (due && dueTasks > 1) {
+                dayHeader.textContent += ` • ${dueTasks} tasks overdue`
+            } else if (due) {
+                dayHeader.textContent += ` • ${dueTasks} task overdue`
+            } else if (dueTasks > 1) {
+                dayHeader.textContent += ` • ${dueTasks} tasks due`
+            } else {
+                dayHeader.textContent += ` • ${dueTasks} task due`
+            }
+        }
 
         if (isToday(day.date)) {
-            dayItem.textContent = `Today • `;
+            dayHeader.textContent = `${format(day.date, 'dd MMMM')} • Today`;
+            addDueTasks();
         } else if (isPast(day.date)) {
-            dayItem.textContent = `Overdue • `;
+            dayHeader.textContent = `Overdue`;
+            addDueTasks(1);
         } else if (isTomorrow(day.date)) {
-            dayItem.textContent = `Tomorrow • `;
+            dayHeader.textContent = `${format(day.date, 'dd MMMM')} • Tomorrow`;
+            addDueTasks();
         } else if (differenceInDays(startOfToday()) < 7, day.date) {
-            dayItem.textContent = `${format(day.date, 'iiii')} • `
+            dayHeader.textContent = `${format(day.date, 'dd MMMM')} • ${format(day.date, 'iiii')}`
+            addDueTasks();
+        } else {
+            dayHeader.textContent += `${format(day.date, 'dd MMMM')}`;
+            addDueTasks();
         }
-        dayItem.textContent += `${format(day.date, 'dd MMMM')}`;
 
-        dayContainer.appendChild(dayItem);
-        const taskContainer = document.createElement('div');
-        addTasksToDay(day, taskContainer);
-        dayContainer.appendChild(taskContainer);
+        dayContainer.appendChild(dayHeader);
+        addDivider(dayContainer);
+        // const taskContainer = document.createElement('div');
+        addTasksToDay(day, dayContainer);
+        // dayContainer.appendChild(taskContainer);
         listContainer.appendChild(dayContainer)
     })
+
+    
 }
 
-function addTasksToDay(day, taskContainer) {
+function addTasksToDay(day, dayContainer) {
     const dayTasks = day.getAllTasks();
-    
+
     dayTasks.forEach((task) => {
-        // Create task item
-        const taskItem = document.createElement('li');
-        taskItem.textContent = `${task.name}: ${task.description}`;
+        const taskContainer = document.createElement('div');
+        taskContainer.classList.add('task-container');
 
-        // Create remove button
         const removeButton = document.createElement('button');
-        removeButton.textContent = 'Remove';
         removeButton.addEventListener('click', () => {
-            // Remove task from tasks array
             todolist.removeTaskFromDay(day, task);
-
-            // Re-render the task list
             renderTasks();
         });
+        taskContainer.appendChild(removeButton);
 
-        // Append the button to the task item
-        taskItem.appendChild(removeButton);
+        const taskInfo = document.createElement('div');
+        taskInfo.classList.add('task-info');
 
-        // Append the task item to the task container
-        taskContainer.appendChild(taskItem);
+        const taskTitle = document.createElement('div');
+        taskTitle.textContent = `${task.name}`;
+        const taskDesc = document.createElement('div');
+        taskDesc.textContent = `${task.description}`;
+        taskInfo.appendChild(taskTitle);
+        taskInfo.appendChild(taskDesc);
+        taskContainer.appendChild(taskInfo);
+
+        dayContainer.appendChild(taskContainer);
+        addDivider(dayContainer)
     });
+}
+
+function addDivider(parent) {
+    const divider = document.createElement('div');
+    divider.classList.add('divider');
+    parent.appendChild(divider);
 }
 
 export { renderTasks };

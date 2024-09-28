@@ -4,6 +4,16 @@ import { renderTasks } from './myTasks.js';
 
 
 document.addEventListener('DOMContentLoaded', () => {
+    const title = document.querySelector('#title')
+    const myTasksHeader = document.createElement('div');
+    const myTasksHeader1 = document.createElement('h1');
+    const myTasksHeader2 = document.createElement('h2');
+    myTasksHeader1.textContent = "My Tasks";
+    myTasksHeader2.textContent = "Welcome back, Guest! It's time to Lock In!";
+    myTasksHeader.appendChild(myTasksHeader1);
+    myTasksHeader.appendChild(myTasksHeader2);
+    title.appendChild(myTasksHeader);
+
     renderTasks();  // Render tasks on page load
 
     // Dialog to add new Task
