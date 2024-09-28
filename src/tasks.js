@@ -89,8 +89,10 @@ class TodoList {
 }
 
 const todolist = new TodoList();
-const task1 = ["task 1", "my first task", '2024-09-20'];
+const task1 = ["task 1", "my first task", '2024-09-28'];
 const task2 = ["task 2", "my second task", '2024-09-22'];
+const task3 = ["task 2", "my third task", '2024-09-29'];
+todolist.addTaskToDay(task3);
 todolist.addTaskToDay(task1);
 todolist.addTaskToDay(task2);
 

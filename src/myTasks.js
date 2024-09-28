@@ -1,5 +1,5 @@
-// myTasks.js
 import { todolist } from './tasks.js';
+import { differenceInDays, format, isPast, isToday, isTomorrow, startOfToday} from "date-fns";
 
 // Function to render tasks in the DOM
 function renderTasks() {
@@ -11,7 +11,18 @@ function renderTasks() {
     todolistDays.forEach((day) => {
         const dayContainer = document.createElement('div');
         const dayItem = document.createElement('p');
-        dayItem.textContent = `${day.date}`;
+
+        if (isToday(day.date)) {
+            dayItem.textContent = `Today • `;
+        } else if (isPast(day.date)) {
+            dayItem.textContent = `Overdue • `;
+        } else if (isTomorrow(day.date)) {
+            dayItem.textContent = `Tomorrow • `;
+        } else if (differenceInDays(startOfToday()) < 7, day.date) {
+            dayItem.textContent = `${format(day.date, 'iiii')} • `
+        }
+        dayItem.textContent += `${format(day.date, 'dd MMMM')}`;
+
         dayContainer.appendChild(dayItem);
         const taskContainer = document.createElement('div');
         addTasksToDay(day, taskContainer);

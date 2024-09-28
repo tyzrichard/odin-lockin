@@ -2,6 +2,7 @@ import "./styles.css";
 import { todolist,  } from "./tasks.js";
 import { renderTasks } from './myTasks.js';
 
+
 document.addEventListener('DOMContentLoaded', () => {
     renderTasks();  // Render tasks on page load
 
