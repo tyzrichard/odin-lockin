@@ -1,5 +1,5 @@
 import "./styles.css";
-import { todolist } from "./tasks.js";
+import { todolist,  } from "./tasks.js";
 import { renderTasks } from './myTasks.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         dialog.close();
-        addTask(formValues[0], formValues[1], formValues[2]);
+        todolist.addTaskToDay(formValues)
         renderTasks();
     })
 
