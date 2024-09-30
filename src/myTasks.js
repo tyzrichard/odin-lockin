@@ -46,9 +46,7 @@ function renderTasks() {
 
         dayContainer.appendChild(dayHeader);
         addDivider(dayContainer);
-        // const taskContainer = document.createElement('div');
         addTasksToDay(day, dayContainer);
-        // dayContainer.appendChild(taskContainer);
         listContainer.appendChild(dayContainer)
     })
 
@@ -67,6 +65,15 @@ function addTasksToDay(day, dayContainer) {
             todolist.removeTaskFromDay(day, task);
             renderTasks();
         });
+        if (task.priority == '1') {
+            removeButton.classList.add('priority1')
+        } else if (task.priority == '2') {
+            removeButton.classList.add('priority2')
+        } else if (task.priority == '3') {
+            removeButton.classList.add('priority3')
+        } else {
+            removeButton.classList.add('priority4')
+        }
         taskContainer.appendChild(removeButton);
 
         const taskInfo = document.createElement('div');
@@ -82,10 +89,6 @@ function addTasksToDay(day, dayContainer) {
             taskInfo.appendChild(taskDesc);
         }
         taskContainer.appendChild(taskInfo);
-
-        // if (!task.date) {
-
-        // }
 
         dayContainer.appendChild(taskContainer);
         addDivider(dayContainer)

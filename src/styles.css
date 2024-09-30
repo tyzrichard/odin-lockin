@@ -220,12 +220,39 @@ li {
     height: 20px;
     width: 20px;
     border-radius: 1000px;
-    border: 2px solid #F87171;
     background-color: #030712;
 }
 
-.task-container>button:hover {
+.priority1 {
+    border: 2px solid #F87171;
+}
+
+.priority1:hover {
     background-color: #F87171;
+}
+
+.priority2 {
+    border: 2px solid #FB923C;
+}
+
+.priority2:hover {
+    background-color: #FB923C;
+}
+
+.priority3 {
+    border: 2px solid #60A5FA;
+}
+
+.priority3:hover {
+    background-color: #60A5FA;
+}
+
+.priority4 {
+    border: 2px solid #9CA3AF;
+}
+
+.priority4:hover {
+    background-color: #9CA3AF;
 }
 
 .task-info {
