@@ -1,7 +1,7 @@
 import "./styles.css";
-import { todolist,  } from "./tasks.js";
+import { todolist } from "./tasks.js";
 import { renderTasks } from './myTasks.js';
-
+import { startOfToday, format } from "date-fns";
 
 document.addEventListener('DOMContentLoaded', () => {
     const title = document.querySelector('#title')
@@ -22,6 +22,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const addNewTaskButton = document.querySelector(".new-task");
     const closeButton = document.querySelector(".closeDialog");
 
+    // const dateInput = document.getElementById("duedate");
+    // const calendarButton = document.getElementById("calendarButton");
+
+    // calendarButton.addEventListener("click", () => {
+    //     console.log("Calendar button clicked");
+    //     dateInput.focus(); // Set focus to the date input
+    // });
+
+    // // Optionally handle the date selection here
+    // dateInput.addEventListener("change", (event) => {
+    //     console.log("Selected date:", event.target.value); // Get the selected date
+    // });
+
     form.addEventListener('submit', (event) => {
         event.preventDefault(); // Prevent the default form submission behavior
 
@@ -31,6 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
             formValues.push(value);
         });
 
+        if (formValues[4] == '') {
+            formValues[4] = format(startOfToday(), 'yyyy-MM-dd');
+        }
         dialog.close();
         todolist.addTaskToDay(formValues)
         renderTasks();

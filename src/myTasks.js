@@ -74,11 +74,18 @@ function addTasksToDay(day, dayContainer) {
 
         const taskTitle = document.createElement('div');
         taskTitle.textContent = `${task.name}`;
-        const taskDesc = document.createElement('div');
-        taskDesc.textContent = `${task.description}`;
         taskInfo.appendChild(taskTitle);
-        taskInfo.appendChild(taskDesc);
+
+        if (task.description != '') {
+            const taskDesc = document.createElement('div');
+            taskDesc.textContent = `${task.description}`;
+            taskInfo.appendChild(taskDesc);
+        }
         taskContainer.appendChild(taskInfo);
+
+        // if (!task.date) {
+
+        // }
 
         dayContainer.appendChild(taskContainer);
         addDivider(dayContainer)
