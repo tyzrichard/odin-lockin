@@ -2,8 +2,14 @@ import "./styles.css";
 import { todolist } from "./tasks.js";
 import { renderTasks } from './myTasks.js';
 import { startOfToday, format } from "date-fns";
+import { defineCustomElements } from "@duetds/date-picker/dist/loader";
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    //Dialog Datepicker
+    defineCustomElements(window);
+
+    //Content
     const title = document.querySelector('#title')
     const myTasksHeader = document.createElement('div');
     const myTasksHeader1 = document.createElement('h1');
@@ -22,18 +28,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const addNewTaskButton = document.querySelector(".new-task");
     const closeButton = document.querySelector(".closeDialog");
 
-    // const dateInput = document.getElementById("duedate");
-    // const calendarButton = document.getElementById("calendarButton");
-
-    // calendarButton.addEventListener("click", () => {
-    //     console.log("Calendar button clicked");
-    //     dateInput.focus(); // Set focus to the date input
-    // });
-
-    // // Optionally handle the date selection here
-    // dateInput.addEventListener("change", (event) => {
-    //     console.log("Selected date:", event.target.value); // Get the selected date
-    // });
 
     form.addEventListener('submit', (event) => {
         event.preventDefault(); // Prevent the default form submission behavior

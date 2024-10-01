@@ -157,6 +157,8 @@ dialog {
     transform: translateX(-50%) translateY(-50%);
 }
 
+
+
 .projects {
     display: flex;
     flex-direction: column;
