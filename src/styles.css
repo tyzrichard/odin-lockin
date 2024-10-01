@@ -165,14 +165,25 @@ dialog * {
     background: transparent;
 }
 
+.input {
+    display: flex;
+}
+
 #task_name {
     font-size: 18px;
     font-weight: 500;
+    width: 100%;
 }
 
 #desc {
     font-size: 16px;
     font-weight: 400;
+    resize: none;
+}
+
+.form-options {
+    display: flex;
+    gap: 15px;
 }
 
 .priority-div, 
@@ -202,13 +213,23 @@ dialog * {
     cursor: pointer;
 }
 
-/* .duet-date__dialog-content{
-    position: absolute;
-    top: -100px;
-    right: 0px;
-    scale: 0.5;
-} */
+.date-div > * {
+    position: relative;
+    appearance: none;
+    border: solid 1px #6B7280;
+    border-radius: 5px;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: 300;
+    cursor: pointer;
+}
 
+.flatpickr-calendar {
+    position: absolute;
+    scale: 0.8;
+    top: 200px;
+    right: -300px;
+}
 
 .projects {
     display: flex;
@@ -247,9 +268,7 @@ dialog * {
     background-color: rgba(154, 52, 18, 25%);
 }
 
-li {
-    color: white;
-}
+
 
 /* My Tasks */
 .day-container {

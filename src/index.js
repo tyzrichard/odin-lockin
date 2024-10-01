@@ -3,12 +3,21 @@ import { todolist } from "./tasks.js";
 import { renderTasks } from './myTasks.js';
 import { startOfToday, format } from "date-fns";
 import '@mantine/dates/styles.css';
-// import { defineCustomElements } from "@duetds/date-picker/dist/loader";
+import flatpickr from "flatpickr";
+import "flatpickr/dist/flatpickr.min.css";
 
 document.addEventListener('DOMContentLoaded', () => {
 
     //Dialog Datepicker
-    // defineCustomElements(window);
+    flatpickr("#date", {
+        altInput: true,
+        altFormat: "F j, Y",
+        dateFormat: "Y-m-d",
+        static: true,
+        onChange: function (selectedDates, dateStr, instance) {
+        
+        }
+    });
 
     //Content
     const title = document.querySelector('#title')
@@ -31,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const priority_dropdown = document.getElementById('priority');
     const priority_dropdown_flag = document.querySelector(".priority_dropdown_flag")
-    priority_dropdown.addEventListener('change', function() { // Changing Priority Flag Colour
+    priority_dropdown.addEventListener('change', function () { // Changing Priority Flag Colour
         const selectedValue = priority_dropdown.value;
         if (selectedValue == 1) {
             changeSvgColor(priority_dropdown_flag, "#F87171");
@@ -46,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     form.addEventListener('submit', (event) => { // Submitting Form
-        event.preventDefault(); 
+        event.preventDefault();
 
         const formData = new FormData(form);
         const formValues = [];
