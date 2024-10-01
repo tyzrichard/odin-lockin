@@ -30,23 +30,26 @@
                         <input type="text" id="task_name" name="task_name" placeholder="Task Name" required>
                     </div>
                     <div class="input">
-                        <textarea name="desc" rows="5" cols="70" placeholder="Description"></textarea>
+                        <textarea id="desc" name="desc" rows="5" cols="70" placeholder="Description"></textarea>
                     </div>
                     <div>
-                        <select name="priority" id="priority">
-                            <option value="1">Priority 1</option>
-                            <option value="2">Priority 2</option>
-                            <option value="3">Priority 3</option>
-                            <option value="4" selected>Priority 4</option>
-                        </select>
-                        <select name="project" id="project">
-                            <option value="my-tasks">My Tasks</option>
-                        </select>
-                        <!-- <div class="input">
-                            <label for="duedate">Due Date</label>
-                            <input type="date" id="duedate" name="duedate">
-                        </div> -->
-                        <duet-date-picker identifier="my-date-picker" direction="auto"></duet-date-picker>
+                        <div class="priority-div">
+                            <select name="priority" id="priority">
+                                <option value="1">Priority 1</option>
+                                <option value="2">Priority 2</option>
+                                <option value="3">Priority 3</option>
+                                <option value="4" selected>Priority 4</option>
+                            </select>
+                            <svg class="priority_dropdown_flag" xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M200-80v-760h640l-80 200 80 200H280v360h-80Zm80-440h442l-48-120 48-120H280v240Zm0 0v-240 240Z"/></svg>
+                        </div>
+                        <div class="project-div">
+                            <select name="project" id="project">
+                                <option value="my-tasks">My Tasks</option>
+                            </select>    
+                            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="m438-240 226-226-58-58-169 169-84-84-57 57 142 142ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v480q0 33-23.5 56.5T720-80H240Zm280-520v-200H240v640h480v-440H520ZM240-800v200-200 640-640Z"/></svg>
+                        </div>
+                        
+                        <!-- <duet-date-picker identifier="my-date-picker" direction="auto"></duet-date-picker> -->
                     </div>
                     <div class="divider"></div>
                     <p>Add Labels</p>
