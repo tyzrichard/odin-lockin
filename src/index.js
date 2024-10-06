@@ -9,15 +9,7 @@ import "flatpickr/dist/flatpickr.min.css";
 document.addEventListener('DOMContentLoaded', () => {
 
     //Dialog Datepicker
-    flatpickr("#date", {
-        altInput: true,
-        altFormat: "F j, Y",
-        dateFormat: "Y-m-d",
-        static: true,
-        onChange: function (selectedDates, dateStr, instance) {
-        
-        }
-    });
+    datePickerInitialisation();
 
     //Content
     const title = document.querySelector('#title')
@@ -33,10 +25,28 @@ document.addEventListener('DOMContentLoaded', () => {
     renderTasks();  // Render tasks on page load
 
     // Dialog to add new Task
+    addTaskDialogInitialisation();
+});
+
+
+function datePickerInitialisation() {
+    flatpickr("#date", {
+        altInput: true,
+        altFormat: "F j, Y",
+        dateFormat: "Y-m-d",
+        static: true,
+        onChange: function (selectedDates, dateStr, instance) {
+
+        }
+    });
+}
+
+function addTaskDialogInitialisation() {
     const dialog = document.querySelector("dialog");
     const form = document.querySelector("form");
     const addNewTaskButton = document.querySelector(".new-task");
     const closeButton = document.querySelector(".closeDialog");
+    const submitButton = document.querySelector(".submitDialog");
 
     const priority_dropdown = document.getElementById('priority');
     const priority_dropdown_flag = document.querySelector(".priority_dropdown_flag")
@@ -53,9 +63,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    const taskname = document.getElementById("task_name");
+    function checkInputs() {
+        if (taskname.value.trim() !== '') {
+            submitButton.disabled = false;
+        } else {
+            submitButton.disabled = true;
+        }
+    }
+    taskname.addEventListener('input', checkInputs);
 
     form.addEventListener('submit', (event) => { // Submitting Form
         event.preventDefault();
+        alert('Selected options: ' + hiddenInput.value);
 
         const formData = new FormData(form);
         const formValues = [];
@@ -69,17 +89,42 @@ document.addEventListener('DOMContentLoaded', () => {
         dialog.close();
         todolist.addTaskToDay(formValues)
         renderTasks();
-    })
+    });
+
+    const labelButtons = document.querySelectorAll('.label-button');
+    const hiddenInput = document.getElementById('selected-labels');
+
+    labelButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            // Toggle the 'selected' class
+            this.classList.toggle('selected');
+            updateSelectedOptions();
+        });
+    });
+
+    function updateSelectedOptions() {
+        // Get all selected buttons
+        const selectedValues = [];
+        document.querySelectorAll('.option-button.selected').forEach(button => {
+            selectedValues.push(button.getAttribute('data-value'));
+        });
+
+        // Update the hidden input value
+        hiddenInput.value = selectedValues.join(',');
+    }
 
     addNewTaskButton.addEventListener("click", () => {
         dialog.showModal();
         form.reset();
+        checkInputs();
     });
 
     closeButton.addEventListener('click', () => {
         dialog.close();
     });
-});
+
+}
+
 
 
 // Styling Logic

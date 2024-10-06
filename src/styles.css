@@ -181,12 +181,18 @@ dialog * {
     resize: none;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .form-options {
     display: flex;
     gap: 15px;
 }
 
-.priority-div, 
+.priority-div,
 .project-div {
     position: relative;
     width: fit-content;
@@ -213,7 +219,7 @@ dialog * {
     cursor: pointer;
 }
 
-.date-div > * {
+.date-div>* {
     position: relative;
     appearance: none;
     border: solid 1px #6B7280;
@@ -229,6 +235,47 @@ dialog * {
     scale: 0.8;
     top: 200px;
     right: -300px;
+}
+
+.form-labels {
+    display: flex;
+    gap: 15px;
+}
+
+.selected {
+    background-color: #FB923C;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: end;
+    padding-top: 15px;
+}
+
+.closeDialog,
+.submitDialog {
+    padding: 5px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.closeDialog {
+    background-color: #3F3F46;
+}
+
+.submitDialog {
+    font-weight: 600;
+}
+
+.submitDialog:disabled {
+    color: rgba(251, 146, 60, 40%);
+    background-color: rgba(154, 52, 18, 20%);
+}
+
+.submitDialog:enabled {
+    color: rgba(251, 146, 60, 100%);
+    background-color: rgba(154, 52, 18, 40%);
 }
 
 .projects {
