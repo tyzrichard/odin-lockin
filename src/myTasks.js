@@ -50,7 +50,7 @@ function renderTasks() {
         listContainer.appendChild(dayContainer)
     })
 
-    
+
 }
 
 function addTasksToDay(day, dayContainer) {
@@ -85,9 +85,26 @@ function addTasksToDay(day, dayContainer) {
 
         if (task.description != '') {
             const taskDesc = document.createElement('div');
+            taskDesc.classList.add("task-desc");
             taskDesc.textContent = `${task.description}`;
             taskInfo.appendChild(taskDesc);
         }
+
+        if (task.labels != '') {
+            const labels = task.labels.split(",");
+            const labelContainer = document.createElement("div");
+            labelContainer.classList.add("label-container")
+
+            labels.forEach(label => {
+                const labelItem = document.createElement("div");
+                labelItem.textContent = label;
+                labelContainer.appendChild(labelItem);
+            })
+
+            taskInfo.appendChild(labelContainer);
+        }
+
+
         taskContainer.appendChild(taskInfo);
 
         dayContainer.appendChild(taskContainer);

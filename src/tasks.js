@@ -1,19 +1,21 @@
 class Task {
-    constructor(name, description = '', priority, project, duedate) {
+    constructor(name, description = '', priority, project, duedate, labels) {
         this.name = name;
         this.description = description;
         this.priority = priority;
         this.project = project;
         this.duedate = duedate
+        this.labels = labels;
     }
 
 
-    updateTask(name, description, priority, project, duedate) {
+    updateTask(name, description, priority, project, duedate, labels) {
         this.name = name;
         this.description = description;
         this.priority = priority;
         this.project = project;
         this.duedate = duedate
+        this.labels = labels
     }
 }
 
@@ -59,13 +61,14 @@ class TodoList {
         const priority = taskInfo[2];
         const project = taskInfo[3];
         const date = taskInfo[4];
+        const labels = taskInfo[5];
         console.log(date)
         let day = this.findDay(date);
         if (!day) {
             day = new Day(date);
             this.addDay(day);
         }
-        const task = new Task(name, desc, priority, project, date);
+        const task = new Task(name, desc, priority, project, date, labels);
         day.addTask(task);
     }
 

@@ -315,8 +315,6 @@ form {
     background-color: rgba(154, 52, 18, 25%);
 }
 
-
-
 /* My Tasks */
 .day-container {
     display: flex;
@@ -377,15 +375,23 @@ form {
 .task-info {
     display: flex;
     flex-direction: column;
+    gap: 2px;
 }
 
-.task-info :first-child {
+.task-info > :first-child {
     font-size: 14px;
 }
 
-.task-info :nth-child(2) {
+.task-desc {
     font-size: 12px;
-    font-weight: 200;
+    font-weight: 300;
+}
+
+.label-container {
+    display: flex;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 300;
 }
 
 .divider {

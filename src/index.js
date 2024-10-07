@@ -35,9 +35,6 @@ function datePickerInitialisation() {
         altFormat: "F j, Y",
         dateFormat: "Y-m-d",
         static: true,
-        onChange: function (selectedDates, dateStr, instance) {
-
-        }
     });
 }
 
@@ -73,9 +70,45 @@ function addTaskDialogInitialisation() {
     }
     taskname.addEventListener('input', checkInputs);
 
+    const labelButtons = document.querySelectorAll('.label-button');
+    const hiddenInput = document.getElementById('selected-labels');
+
+    labelButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            // Toggle the 'selected' class
+            this.classList.toggle('selected');
+            updateSelectedLabels();
+        });
+    });
+
+    function updateSelectedLabels() {
+        const selectedValues = [];
+        document.querySelectorAll('.label-button.selected').forEach(button => {
+            selectedValues.push(button.getAttribute('data-value'));
+        });
+
+        hiddenInput.value = selectedValues;
+    }
+
+    function resetSelectedLabels() {
+        document.querySelectorAll('.label-button.selected').forEach(button => {
+            button.classList.toggle('selected');
+        });
+    }
+
+    addNewTaskButton.addEventListener("click", () => {
+        dialog.showModal();
+        form.reset();
+        checkInputs();
+        resetSelectedLabels();
+    });
+
+    closeButton.addEventListener('click', () => {
+        dialog.close();
+    });
+
     form.addEventListener('submit', (event) => { // Submitting Form
         event.preventDefault();
-        alert('Selected options: ' + hiddenInput.value);
 
         const formData = new FormData(form);
         const formValues = [];
@@ -86,43 +119,11 @@ function addTaskDialogInitialisation() {
         if (formValues[4] == '') {
             formValues[4] = format(startOfToday(), 'yyyy-MM-dd');
         }
+        console.log(formValues)
         dialog.close();
         todolist.addTaskToDay(formValues)
         renderTasks();
     });
-
-    const labelButtons = document.querySelectorAll('.label-button');
-    const hiddenInput = document.getElementById('selected-labels');
-
-    labelButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            // Toggle the 'selected' class
-            this.classList.toggle('selected');
-            updateSelectedOptions();
-        });
-    });
-
-    function updateSelectedOptions() {
-        // Get all selected buttons
-        const selectedValues = [];
-        document.querySelectorAll('.option-button.selected').forEach(button => {
-            selectedValues.push(button.getAttribute('data-value'));
-        });
-
-        // Update the hidden input value
-        hiddenInput.value = selectedValues.join(',');
-    }
-
-    addNewTaskButton.addEventListener("click", () => {
-        dialog.showModal();
-        form.reset();
-        checkInputs();
-    });
-
-    closeButton.addEventListener('click', () => {
-        dialog.close();
-    });
-
 }
 
 
