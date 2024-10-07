@@ -1,6 +1,7 @@
 import "./styles.css";
 import { todolist } from "./tasks.js";
 import { renderTasks } from './myTasks.js';
+import { labelList } from "./labels.js";
 import { startOfToday, format } from "date-fns";
 import '@mantine/dates/styles.css';
 import flatpickr from "flatpickr";
@@ -70,16 +71,47 @@ function addTaskDialogInitialisation() {
     }
     taskname.addEventListener('input', checkInputs);
 
+    function renderLabelButtons() {
+        const labelContainer = document.querySelector(".form-labels");
+        labelContainer.innerHTML = '';
+
+        labelList.labels.forEach(label => {
+            const labelButton = document.createElement("button");
+            labelButton.type = "button";
+            labelButton.classList.add("label-button");
+            labelButton.setAttribute('data-value', label.name);
+            labelButton.textContent = label.name;
+            labelButton.style.color = label.textColor;
+            labelButton.style.border = `1px solid rgba(${hexToRgb(label.textColor)}, 0.5)`;
+            labelContainer.appendChild(labelButton);
+        });
+    }
+
+    renderLabelButtons();
+
     const labelButtons = document.querySelectorAll('.label-button');
     const hiddenInput = document.getElementById('selected-labels');
 
-    labelButtons.forEach(button => {
+    labelButtons.forEach((button, index) => {
+        const label = labelList.labels[index];  // Get corresponding label properties
+
         button.addEventListener('click', function () {
-            // Toggle the 'selected' class
             this.classList.toggle('selected');
-            updateSelectedLabels();
+
+            if (button.classList.contains('selected')) {
+                // Set the background color to the label's text color and remove the border
+                button.style.backgroundColor = `rgba(${hexToRgb(label.bgColor)}, 0.3`;
+                button.style.border = `1px solid #0F172A`;
+            } else {
+                // Reset the background color to the label's bgColor and set the border to textColor
+                button.style.backgroundColor = '';
+                button.style.border = `1px solid rgba(${hexToRgb(label.textColor)}, 0.5)`;
+            }
+
+            updateSelectedLabels(); // Function to update selected labels
         });
     });
+
 
     function updateSelectedLabels() {
         const selectedValues = [];
@@ -126,6 +158,15 @@ function addTaskDialogInitialisation() {
     });
 }
 
+function hexToRgb(hex) {
+    // Remove '#' if present
+    hex = hex.replace('#', '');
+    let bigint = parseInt(hex, 16);
+    let r = (bigint >> 16) & 255;
+    let g = (bigint >> 8) & 255;
+    let b = bigint & 255;
+    return `${r}, ${g}, ${b}`;
+}
 
 
 // Styling Logic
