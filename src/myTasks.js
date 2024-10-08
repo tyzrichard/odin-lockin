@@ -6,6 +6,7 @@ function renderTasks() {
     const listContainer = document.getElementById('content');
     listContainer.innerHTML = '';  // Clear the previous task list
 
+    todolist.rearrangeDays();
     const todolistDays = todolist.getAllDays();
 
     todolistDays.forEach((day) => {
