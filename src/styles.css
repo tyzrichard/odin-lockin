@@ -340,6 +340,7 @@ form {
 
 .day-header {
     font-size: 16px;
+    font-weight: 500;
 }
 
 .task-container {
@@ -395,19 +396,26 @@ form {
 }
 
 .task-info > :first-child {
-    font-size: 14px;
+    font-size: 16px;
+    font-weight: 500;
 }
 
 .task-desc {
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 300;
 }
 
 .label-container {
     display: flex;
-    gap: 10px;
+    gap: 15px;
     font-size: 12px;
     font-weight: 300;
+}
+
+.label-item {
+    display: flex;
+    gap: 3px;
+    align-items: center;
 }
 
 .divider {

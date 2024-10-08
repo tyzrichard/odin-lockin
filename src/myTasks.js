@@ -91,13 +91,28 @@ function addTasksToDay(day, dayContainer) {
         }
 
         if (task.labels != '') {
-            const labels = task.labels.split(",");
+            const labels = task.labels;
             const labelContainer = document.createElement("div");
             labelContainer.classList.add("label-container")
 
             labels.forEach(label => {
                 const labelItem = document.createElement("div");
+                labelItem.classList.add("label-item")
                 labelItem.textContent = label[0];
+
+                fetch(label[1])
+                    .then(response => response.text())
+                    .then(svgData => {
+                        const labelSvg = document.createElement('div');
+                        labelSvg.classList.add("label-svg");
+                        labelSvg.innerHTML = svgData;
+
+                        labelItem.appendChild(labelSvg);
+
+                        labelSvg.querySelector('svg').style.fill = label[2];
+                        labelItem.style.color = label[2];
+                    })
+                    .catch(error => console.log(error));
                 labelContainer.appendChild(labelItem);
             })
 

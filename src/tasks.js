@@ -55,20 +55,13 @@ class TodoList {
         return this.days.find(day => day.date === date);
     }
 
-    addTaskToDay(taskInfo) {
-        const name = taskInfo[0];
-        const desc = taskInfo[1];
-        const priority = taskInfo[2];
-        const project = taskInfo[3];
-        const date = taskInfo[4];
-        const labels = taskInfo[5];
-        console.log(date)
+    addTask(task) {
+        const date = task.date;
         let day = this.findDay(date);
         if (!day) {
             day = new Day(date);
             this.addDay(day);
         }
-        const task = new Task(name, desc, priority, project, date, labels);
         day.addTask(task);
     }
 

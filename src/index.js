@@ -2,6 +2,7 @@ import "./styles.css";
 import { todolist, Task } from "./tasks.js";
 import { renderTasks } from './myTasks.js';
 import { labelList } from "./labels.js";
+import { changeSvgColor, hexToRgb } from "./svgFunctions.js";
 import { startOfToday, format } from "date-fns";
 import '@mantine/dates/styles.css';
 import flatpickr from "flatpickr";
@@ -40,7 +41,8 @@ function datePickerInitialisation() {
 }
 
 function addTaskDialogInitialisation() {
-    const tempTask = new Task()
+    const tempTask = new Task();
+    console.log("temptask reinit")
 
     const dialog = document.querySelector("dialog");
     const form = document.querySelector("form");
@@ -109,7 +111,6 @@ function addTaskDialogInitialisation() {
     renderLabelButtons();
 
     const labelButtons = document.querySelectorAll('.label-button');
-    const hiddenInput = document.getElementById('selected-labels');
 
     labelButtons.forEach((button, index) => {
         const label = labelList.labels[index];  // Get corresponding label properties
@@ -139,13 +140,15 @@ function addTaskDialogInitialisation() {
             selectedValues.push(labelValues);
         });
 
-        hiddenInput.value = selectedValues;
+        tempTask.labels = selectedValues;
     }
 
     function resetSelectedLabels() {
         document.querySelectorAll('.label-button.selected').forEach(button => {
             button.classList.toggle('selected');
         });
+
+        tempTask.labels = [];
     }
 
     addNewTaskButton.addEventListener("click", () => {
@@ -167,27 +170,24 @@ function addTaskDialogInitialisation() {
         formData.forEach((value) => {
             formValues.push(value);
         });
-
-        if (formValues[4] == '') {
-            formValues[4] = format(startOfToday(), 'yyyy-MM-dd');
-        }
-        console.log(formValues)
+        let [name, desc, priority, project, date] = formValues;
         dialog.close();
-        todolist.addTaskToDay(formValues)
+
+        if (date == '') {
+            date = format(startOfToday(), 'yyyy-MM-dd');
+        }
+
+        tempTask.name = name;
+        tempTask.description = desc;
+        tempTask.priority = priority;
+        tempTask.project = project;
+        tempTask.date = date;
+
+        console.log(tempTask)
+        todolist.addTask(tempTask);
         renderTasks();
     });
 }
-
-function hexToRgb(hex) {
-    // Remove '#' if present
-    hex = hex.replace('#', '');
-    let bigint = parseInt(hex, 16);
-    let r = (bigint >> 16) & 255;
-    let g = (bigint >> 8) & 255;
-    let b = bigint & 255;
-    return `${r}, ${g}, ${b}`;
-}
-
 
 // Styling Logic
 const mainOptions = document.querySelectorAll(".main-option");
@@ -204,13 +204,6 @@ function resetOptionColours() {
         }
         option.style["background-color"] = "";
     })
-}
-
-function changeSvgColor(svg, color) {
-    const svgElements = svg.querySelectorAll("path, circle, rect, polygon");
-    svgElements.forEach((element) => {
-        element.setAttribute("fill", color);
-    });
 }
 
 mainOptionsAndProjects.forEach((option) => {
