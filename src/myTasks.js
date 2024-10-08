@@ -97,7 +97,7 @@ function addTasksToDay(day, dayContainer) {
 
             labels.forEach(label => {
                 const labelItem = document.createElement("div");
-                labelItem.textContent = label;
+                labelItem.textContent = label[0];
                 labelContainer.appendChild(labelItem);
             })
 

@@ -1,5 +1,5 @@
 import "./styles.css";
-import { todolist } from "./tasks.js";
+import { todolist, Task } from "./tasks.js";
 import { renderTasks } from './myTasks.js';
 import { labelList } from "./labels.js";
 import { startOfToday, format } from "date-fns";
@@ -40,6 +40,8 @@ function datePickerInitialisation() {
 }
 
 function addTaskDialogInitialisation() {
+    const tempTask = new Task()
+
     const dialog = document.querySelector("dialog");
     const form = document.querySelector("form");
     const addNewTaskButton = document.querySelector(".new-task");
@@ -76,13 +78,30 @@ function addTaskDialogInitialisation() {
         labelContainer.innerHTML = '';
 
         labelList.labels.forEach(label => {
-            const labelButton = document.createElement("button");
-            labelButton.type = "button";
+            const labelButton = document.createElement("div");
             labelButton.classList.add("label-button");
-            labelButton.setAttribute('data-value', label.name);
+            labelButton.setAttribute('data-name', label.name);
+            labelButton.setAttribute('data-svg', label.svg);
+            labelButton.setAttribute('data-textColor', label.textColor);
             labelButton.textContent = label.name;
             labelButton.style.color = label.textColor;
             labelButton.style.border = `1px solid rgba(${hexToRgb(label.textColor)}, 0.5)`;
+
+            fetch(label.svg)
+                .then(response => response.text())
+                .then(svgData => {
+                    // Create a container for the SVG
+                    const labelSvg = document.createElement('div');
+                    labelSvg.classList.add("label-svg");
+                    labelSvg.innerHTML = svgData; // Inject SVG into the DOM
+
+                    // Append the SVG to the button
+                    labelButton.appendChild(labelSvg);
+
+                    // Change the color (if the SVG has a fill or stroke property)
+                    labelSvg.querySelector('svg').style.fill = label.textColor;
+                })
+                .catch(error => console.log(error));
             labelContainer.appendChild(labelButton);
         });
     }
@@ -116,7 +135,8 @@ function addTaskDialogInitialisation() {
     function updateSelectedLabels() {
         const selectedValues = [];
         document.querySelectorAll('.label-button.selected').forEach(button => {
-            selectedValues.push(button.getAttribute('data-value'));
+            const labelValues = [button.getAttribute('data-name'), button.getAttribute('data-svg'), button.getAttribute('data-textColor')]
+            selectedValues.push(labelValues);
         });
 
         hiddenInput.value = selectedValues;

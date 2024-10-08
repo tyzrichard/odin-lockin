@@ -250,8 +250,16 @@ form {
     border-radius: 5px;
     padding: 5px 8px;
     font-size: 12px;
-    font-weight: 300;
+    font-weight: 400;
     cursor: pointer;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.label-svg > *{
+    height: 14px;
+    width: 14px;
 }
 
 .form-buttons {
