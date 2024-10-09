@@ -51,7 +51,6 @@ function renderTasks() {
         listContainer.appendChild(dayContainer)
     })
 
-
 }
 
 function addTasksToDay(day, dayContainer) {
