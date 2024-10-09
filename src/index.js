@@ -41,8 +41,8 @@ function datePickerInitialisation() {
 }
 
 function addTaskDialogInitialisation() {
-    const tempTask = new Task();
-    console.log("temptask reinit")
+    // Task for the current iteration
+    let tempTask;
 
     const dialog = document.querySelector("dialog");
     const form = document.querySelector("form");
@@ -50,9 +50,10 @@ function addTaskDialogInitialisation() {
     const closeButton = document.querySelector(".closeDialog");
     const submitButton = document.querySelector(".submitDialog");
 
+    // Handling the priority dropdown and its flag
     const priority_dropdown = document.getElementById('priority');
     const priority_dropdown_flag = document.querySelector(".priority_dropdown_flag")
-    priority_dropdown.addEventListener('change', function () { // Changing Priority Flag Colour
+    function changePriorityFlagColour() {
         const selectedValue = priority_dropdown.value;
         if (selectedValue == 1) {
             changeSvgColor(priority_dropdown_flag, "#F87171");
@@ -63,8 +64,12 @@ function addTaskDialogInitialisation() {
         } else {
             changeSvgColor(priority_dropdown_flag, "#9CA3AF");
         }
+    }
+    priority_dropdown.addEventListener('change', function () { 
+        changePriorityFlagColour();
     });
 
+    // Making sure the task's name is filled up before enabling the submit button
     const taskname = document.getElementById("task_name");
     function checkInputs() {
         if (taskname.value.trim() !== '') {
@@ -75,6 +80,7 @@ function addTaskDialogInitialisation() {
     }
     taskname.addEventListener('input', checkInputs);
 
+    // Using JS to render the label button/selectors into the form
     function renderLabelButtons() {
         const labelContainer = document.querySelector(".form-labels");
         labelContainer.innerHTML = '';
@@ -89,50 +95,43 @@ function addTaskDialogInitialisation() {
             labelButton.style.color = label.textColor;
             labelButton.style.border = `1px solid rgba(${hexToRgb(label.textColor)}, 0.5)`;
 
+            // Some complicated ChatGPT ahh shit to render the SVG
             fetch(label.svg)
                 .then(response => response.text())
                 .then(svgData => {
-                    // Create a container for the SVG
                     const labelSvg = document.createElement('div');
                     labelSvg.classList.add("label-svg");
-                    labelSvg.innerHTML = svgData; // Inject SVG into the DOM
-
-                    // Append the SVG to the button
+                    labelSvg.innerHTML = svgData; 
                     labelButton.appendChild(labelSvg);
-
-                    // Change the color (if the SVG has a fill or stroke property)
                     labelSvg.querySelector('svg').style.fill = label.textColor;
                 })
                 .catch(error => console.log(error));
             labelContainer.appendChild(labelButton);
         });
     }
-
     renderLabelButtons();
 
     const labelButtons = document.querySelectorAll('.label-button');
 
+    // Styling for the label buttons
     labelButtons.forEach((button, index) => {
-        const label = labelList.labels[index];  // Get corresponding label properties
+        const label = labelList.labels[index];  
 
         button.addEventListener('click', function () {
             this.classList.toggle('selected');
 
             if (button.classList.contains('selected')) {
-                // Set the background color to the label's text color and remove the border
                 button.style.backgroundColor = `rgba(${hexToRgb(label.bgColor)}, 0.3`;
                 button.style.border = `1px solid #0F172A`;
             } else {
-                // Reset the background color to the label's bgColor and set the border to textColor
                 button.style.backgroundColor = '';
                 button.style.border = `1px solid rgba(${hexToRgb(label.textColor)}, 0.5)`;
             }
-
-            updateSelectedLabels(); // Function to update selected labels
+            updateSelectedLabels(); 
         });
     });
 
-
+    // Updating the label database whenever the buttons are clicked
     function updateSelectedLabels() {
         const selectedValues = [];
         document.querySelectorAll('.label-button.selected').forEach(button => {
@@ -143,26 +142,33 @@ function addTaskDialogInitialisation() {
         tempTask.labels = selectedValues;
     }
 
+    // Reseting the look of the label + its "selected" status
     function resetSelectedLabels() {
         document.querySelectorAll('.label-button.selected').forEach(button => {
             button.classList.toggle('selected');
+            button.style.backgroundColor = '';
+            button.style.border = `1px solid rgba(${hexToRgb(button.getAttribute('data-textColor'))}, 0.5)`;
         });
 
         tempTask.labels = [];
     }
 
+    // Stuff that happens whenever you bring up the form
     addNewTaskButton.addEventListener("click", () => {
         dialog.showModal();
         form.reset();
+        tempTask = new Task();
+        changePriorityFlagColour();
         checkInputs();
         resetSelectedLabels();
     });
 
+    // Close and Submit buttons
     closeButton.addEventListener('click', () => {
         dialog.close();
     });
 
-    form.addEventListener('submit', (event) => { // Submitting Form
+    form.addEventListener('submit', (event) => { 
         event.preventDefault();
 
         const formData = new FormData(form);
@@ -183,7 +189,6 @@ function addTaskDialogInitialisation() {
         tempTask.project = project;
         tempTask.date = date;
 
-        console.log(tempTask)
         todolist.addTask(tempTask);
         renderTasks();
     });
