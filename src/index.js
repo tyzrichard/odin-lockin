@@ -2,6 +2,7 @@ import "./styles.css";
 import { todolist, Task } from "./tasks.js";
 import { renderTasks } from './myTasks.js';
 import { labelList } from "./labels.js";
+import { renderLabels } from "./labelsPage.js";
 import { changeSvgColor, hexToRgb } from "./svgFunctions.js";
 import { startOfToday, format } from "date-fns";
 import '@mantine/dates/styles.css';
@@ -10,24 +11,53 @@ import "flatpickr/dist/flatpickr.min.css";
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    //Dialog Datepicker
+    // Sidebar Dialog + Datepicker Intialisation
     datePickerInitialisation();
+    addTaskDialogInitialisation();
+
+    const pages = {
+        "my-tasks": function () {
+            renderTasks();
+        },
+
+        upcoming: function () {
+            renderLabels();
+        },
+
+        labels: function () {
+            renderLabels();
+        },
+
+        history: function () {
+            renderLabels();
+        },
+    }
+
+    document.querySelectorAll('.main-option').forEach(option => {
+        option.addEventListener('click', function () {
+            const page = this.getAttribute('data-page');
+            if (pages[page]) {
+                pages[page](); // Call the function for the selected page
+            } else {
+                console.error(`Page not found: ${page}`);
+            }
+        });
+    });
 
     //Content
-    const title = document.querySelector('#title')
-    const myTasksHeader = document.createElement('div');
-    const myTasksHeader1 = document.createElement('h1');
-    const myTasksHeader2 = document.createElement('h2');
-    myTasksHeader1.textContent = "My Tasks";
-    myTasksHeader2.textContent = "Welcome back, Guest! It's time to Lock In!";
-    myTasksHeader.appendChild(myTasksHeader1);
-    myTasksHeader.appendChild(myTasksHeader2);
-    title.appendChild(myTasksHeader);
+    // const title = document.querySelector('#title')
+    // const myTasksHeader = document.createElement('div');
+    // const myTasksHeader1 = document.createElement('h1');
+    // const myTasksHeader2 = document.createElement('h2');
+    // myTasksHeader1.textContent = "My Tasks";
+    // myTasksHeader2.textContent = "Welcome back, Guest! It's time to Lock In!";
+    // myTasksHeader.appendChild(myTasksHeader1);
+    // myTasksHeader.appendChild(myTasksHeader2);
+    // title.appendChild(myTasksHeader);
 
-    renderTasks();  // Render tasks on page load
+    // renderTasks();  // Render tasks on page load
 
-    // Dialog to add new Task
-    addTaskDialogInitialisation();
+
 });
 
 
@@ -65,7 +95,7 @@ function addTaskDialogInitialisation() {
             changeSvgColor(priority_dropdown_flag, "#9CA3AF");
         }
     }
-    priority_dropdown.addEventListener('change', function () { 
+    priority_dropdown.addEventListener('change', function () {
         changePriorityFlagColour();
     });
 
@@ -101,7 +131,7 @@ function addTaskDialogInitialisation() {
                 .then(svgData => {
                     const labelSvg = document.createElement('div');
                     labelSvg.classList.add("label-svg");
-                    labelSvg.innerHTML = svgData; 
+                    labelSvg.innerHTML = svgData;
                     labelButton.appendChild(labelSvg);
                     labelSvg.querySelector('svg').style.fill = label.textColor;
                 })
@@ -115,7 +145,7 @@ function addTaskDialogInitialisation() {
 
     // Styling for the label buttons
     labelButtons.forEach((button, index) => {
-        const label = labelList.labels[index];  
+        const label = labelList.labels[index];
 
         button.addEventListener('click', function () {
             this.classList.toggle('selected');
@@ -127,7 +157,7 @@ function addTaskDialogInitialisation() {
                 button.style.backgroundColor = '';
                 button.style.border = `1px solid rgba(${hexToRgb(label.textColor)}, 0.5)`;
             }
-            updateSelectedLabels(); 
+            updateSelectedLabels();
         });
     });
 
@@ -168,7 +198,7 @@ function addTaskDialogInitialisation() {
         dialog.close();
     });
 
-    form.addEventListener('submit', (event) => { 
+    form.addEventListener('submit', (event) => {
         event.preventDefault();
 
         const formData = new FormData(form);
