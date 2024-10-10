@@ -3,6 +3,7 @@ import { todolist, Task } from "./tasks.js";
 import { renderTasks } from './myTasks.js';
 import { labelList } from "./labels.js";
 import { renderLabels } from "./labelsPage.js";
+import { renderUpcoming } from "./upcomingPage.js";
 import { changeSvgColor, hexToRgb } from "./svgFunctions.js";
 import clock from "./assets/labels/clock.svg";
 import { isPast, isToday, startOfToday, format } from "date-fns";
@@ -26,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         upcoming: function () {
             addTitle("Upcoming Tasks", "Everything for the next week")
-            renderLabels();
+            renderUpcoming();
         },
 
         labels: function () {
@@ -36,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         history: function () {
             addTitle("History")
-            renderLabels();
+            renderUpcoming();
         },
     }
 
@@ -51,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    page = "my-tasks";
+    page = "labels";
     pages[page]();
 });
 
@@ -236,6 +237,8 @@ function addTaskDialogInitialisation() {
         todolist.addTask(tempTask);
         if (page == "my-tasks"){
             renderTasks();
+        } else if (page == "labels"){
+            renderLabels();
         }
     });
 }

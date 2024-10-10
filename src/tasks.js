@@ -42,6 +42,14 @@ class Day {
     getNumberOfTasks() {
         return this.tasks.length;
     }
+
+    getNumberOfTasksWithLabel(labelName) {
+        let tasksWithLabel = []
+        tasksWithLabel = this.tasks.filter(task =>
+            task.labels.some(label => label.name === labelName)
+        );
+        return tasksWithLabel.length;
+    }
 }
 
 class TodoList {
@@ -109,6 +117,14 @@ class TodoList {
         return this.days.filter(day => {
             return (isPast(day.date)) && !(isToday(day.date));
         });
+    }
+
+    getNumberOfTasksWithLabel(labelName) {
+        let tasksWithLabel = 0
+        this.days.forEach(day => {
+            tasksWithLabel += day.getNumberOfTasksWithLabel(labelName)
+        })
+        return tasksWithLabel;
     }
 
 }

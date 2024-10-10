@@ -1,4 +1,5 @@
 import { todolist } from './tasks.js';
+import { addDivider } from './svgFunctions.js';
 import { differenceInDays, format, isPast, isToday, isTomorrow, startOfToday } from "date-fns";
 
 // Function to render tasks in the DOM
@@ -157,10 +158,6 @@ function addTasksToDay(day, dayContainer) {
     });
 }
 
-function addDivider(parent) {
-    const divider = document.createElement('div');
-    divider.classList.add('divider');
-    parent.appendChild(divider);
-}
+
 
 export { renderTasks };

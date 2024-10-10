@@ -24,6 +24,14 @@ class LabelList {
     removeLabel(labelName) {
         this.labels = this.labels.filter(label => label.name !== labelName);
     }
+
+    getNumberOfLabels() {
+        return this.labels.length;
+    }
+
+    getAllLabels() {
+        return this.labels;
+    }
 }
 
 const labelList = new LabelList();

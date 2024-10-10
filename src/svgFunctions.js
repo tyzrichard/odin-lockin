@@ -14,4 +14,10 @@ function hexToRgb(hex) {
     return `${r}, ${g}, ${b}`;
 }
 
-export { changeSvgColor, hexToRgb };
+function addDivider(parent) { // I KNOW THIS ISNT A SVG FUNCTION BUT IM LAZY
+    const divider = document.createElement('div');
+    divider.classList.add('divider');
+    parent.appendChild(divider);
+}
+
+export { changeSvgColor, hexToRgb, addDivider };

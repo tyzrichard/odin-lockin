@@ -424,3 +424,22 @@ form {
     background-color: #374151;
     height: 1px;
 }
+
+/* Labels Page */
+
+.label-item-page {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-size: 14px;
+    padding: 0 10px;
+}
+
+.label-svg-large > * {
+    height: 18px;
+    width: 18px;
+}
+
+.label-count {
+    margin-left: auto;
+}

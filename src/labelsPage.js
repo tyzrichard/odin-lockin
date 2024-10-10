@@ -1,10 +1,50 @@
+import { labelList } from "./labels";
+import { todolist } from "./tasks";
+import { addDivider } from "./svgFunctions";
+
 function renderLabels() {
     const listContainer = document.getElementById('content');
     listContainer.innerHTML = '';
 
-    const test = document.createElement("div");
-    test.textContent = "thats crazy! this doesnt work yet, though!";
-    listContainer.appendChild(test);
+    const labelContainer = document.createElement("div");
+    labelContainer.classList.add('day-container');
+
+    const labelsSummary = document.createElement("div");
+    labelsSummary.textContent = `Showing ${labelList.getNumberOfLabels()} Labels`
+    labelsSummary.classList.add('day-header');
+    labelContainer.appendChild(labelsSummary);
+    addDivider(labelContainer);
+
+    const labels = labelList.getAllLabels();
+    labels.forEach(label => {
+        const labelItem = document.createElement("div");
+        labelItem.classList.add("label-item-page")
+        labelItem.textContent = label.name;
+
+        fetch(label.svg)
+            .then(response => response.text())
+            .then(svgData => {
+                const labelSvg = document.createElement('div');
+                labelSvg.classList.add("label-svg-large");
+                labelSvg.innerHTML = svgData;
+
+                labelItem.insertBefore(labelSvg, labelItem.firstChild);
+
+                labelSvg.querySelector('svg').style.fill = label.textColor;
+                labelItem.style.color = label.svg;
+            })
+            .catch(error => console.log(error));
+
+        const labelCount = document.createElement("div");
+        labelCount.textContent = `${todolist.getNumberOfTasksWithLabel(label.name)}`;
+        labelCount.classList.add("label-count")
+        labelItem.appendChild(labelCount);
+        labelContainer.appendChild(labelItem);
+
+        addDivider(labelContainer);
+    })
+
+    listContainer.appendChild(labelContainer);
 }
 
 export { renderLabels };
