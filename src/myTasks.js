@@ -5,34 +5,40 @@ import { differenceInDays, format, isPast, isToday, isTomorrow, startOfToday } f
 function renderTasks() {
     const listContainer = document.getElementById('content');
     listContainer.innerHTML = '';  // Clear the previous task list
-    const overdueContainer = document.createElement('div');
-    overdueContainer.classList.add('day-container')
-    listContainer.appendChild(overdueContainer);
 
     todolist.rearrangeDays();
     const todolistPassedDays = todolist.filterPastDates();
     const todolistFutureDays = todolist.filterFutureDates();
-
     // Adds all overdue days under one container if there are any overdue days
-    if (todolistPassedDays != []) {
+    if (todolistPassedDays.length > 0) {
+        const overdueContainer = document.createElement('div');
+        overdueContainer.classList.add('day-container')
+        listContainer.insertBefore(overdueContainer, listContainer.firstChild);
+
         const overdueHeader = document.createElement('div');
         overdueHeader.classList.add('day-header');
+        let overdueTasks = 0;
+        overdueContainer.appendChild(overdueHeader);
+        addDivider(overdueContainer);
 
         todolistPassedDays.forEach((day) => {
-            addOverdue(day, overdueContainer);
+            addTasksToDay(day, overdueContainer);
+            overdueTasks += day.getNumberOfTasks();
         })
+
+        if (overdueTasks > 1) {
+            overdueHeader.textContent += `Overdue • ${overdueTasks} tasks overdue`
+        } else {
+            overdueHeader.textContent += `Overdue • ${overdueTasks} task overdue`
+        } 
     }
 
     // Regular adding of dates which are not overdue
     todolistFutureDays.forEach((day) => {
         addRegularDay(day, listContainer);
     })
-
 }
 
-function addOverdue(day, overdueContainer) {
-    
-}
 
 function addRegularDay(day, listContainer) {
     const dayContainer = document.createElement('div');
@@ -40,13 +46,9 @@ function addRegularDay(day, listContainer) {
     const dayHeader = document.createElement('div');
     dayHeader.classList.add('day-header');
 
-    function addDueTasks(due) {
+    function addDueTasks() {
         const dueTasks = day.getNumberOfTasks();
-        if (due && dueTasks > 1) {
-            dayHeader.textContent += ` • ${dueTasks} tasks overdue`
-        } else if (due) {
-            dayHeader.textContent += ` • ${dueTasks} task overdue`
-        } else if (dueTasks > 1) {
+        if (dueTasks > 1) {
             dayHeader.textContent += ` • ${dueTasks} tasks due`
         } else {
             dayHeader.textContent += ` • ${dueTasks} task due`
@@ -56,9 +58,6 @@ function addRegularDay(day, listContainer) {
     if (isToday(day.date)) {
         dayHeader.textContent = `${format(day.date, 'dd MMMM')} • Today`;
         addDueTasks();
-    } else if (isPast(day.date)) {
-        dayHeader.textContent = `Overdue`;
-        addDueTasks(1);
     } else if (isTomorrow(day.date)) {
         dayHeader.textContent = `${format(day.date, 'dd MMMM')} • Tomorrow`;
         addDueTasks();
@@ -157,5 +156,3 @@ function addDivider(parent) {
 }
 
 export { renderTasks };
-
-

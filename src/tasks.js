@@ -107,7 +107,7 @@ class TodoList {
 
     filterPastDates() {
         return this.days.filter(day => {
-            return (isPast(day.date));
+            return (isPast(day.date)) && !(isToday(day.date));
         });
     }
 

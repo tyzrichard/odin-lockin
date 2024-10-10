@@ -49,6 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    page = "my-tasks";
+    pages[page]();
 });
 
 
