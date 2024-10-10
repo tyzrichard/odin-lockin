@@ -9,6 +9,7 @@ function renderTasks() {
     todolist.rearrangeDays();
     const todolistPassedDays = todolist.filterPastDates();
     const todolistFutureDays = todolist.filterFutureDates();
+
     // Adds all overdue days under one container if there are any overdue days
     if (todolistPassedDays.length > 0) {
         const overdueContainer = document.createElement('div');
@@ -41,11 +42,13 @@ function renderTasks() {
 
 
 function addRegularDay(day, listContainer) {
+    // Creates Day Container and Header
     const dayContainer = document.createElement('div');
     dayContainer.classList.add('day-container')
     const dayHeader = document.createElement('div');
     dayHeader.classList.add('day-header');
 
+    // Dayheader styling
     function addDueTasks() {
         const dueTasks = day.getNumberOfTasks();
         if (dueTasks > 1) {
@@ -71,6 +74,7 @@ function addRegularDay(day, listContainer) {
 
     dayContainer.appendChild(dayHeader);
     addDivider(dayContainer);
+    // Actual adding of tasks happens in this function
     addTasksToDay(day, dayContainer);
     listContainer.appendChild(dayContainer)
 }
@@ -82,6 +86,7 @@ function addTasksToDay(day, dayContainer) {
         const taskContainer = document.createElement('div');
         taskContainer.classList.add('task-container');
 
+        // Remove button handling + priority styling
         const removeButton = document.createElement('button');
         removeButton.addEventListener('click', () => {
             todolist.removeTaskFromDay(day, task);
@@ -98,6 +103,7 @@ function addTasksToDay(day, dayContainer) {
         }
         taskContainer.appendChild(removeButton);
 
+        // Task Info including title, description and labels
         const taskInfo = document.createElement('div');
         taskInfo.classList.add('task-info');
 
@@ -112,8 +118,10 @@ function addTasksToDay(day, dayContainer) {
             taskInfo.appendChild(taskDesc);
         }
 
+        // Adding of Labels
         if (task.labels != '') {
-            const labels = task.labels;
+            let labels = task.labels;
+
             const labelContainer = document.createElement("div");
             labelContainer.classList.add("label-container")
 

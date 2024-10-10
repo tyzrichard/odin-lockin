@@ -4,7 +4,8 @@ import { renderTasks } from './myTasks.js';
 import { labelList } from "./labels.js";
 import { renderLabels } from "./labelsPage.js";
 import { changeSvgColor, hexToRgb } from "./svgFunctions.js";
-import { startOfToday, format } from "date-fns";
+import clock from "./assets/labels/clock.svg";
+import { isPast, isToday, startOfToday, format } from "date-fns";
 import '@mantine/dates/styles.css';
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
@@ -220,6 +221,10 @@ function addTaskDialogInitialisation() {
 
         if (date == '') {
             date = format(startOfToday(), 'yyyy-MM-dd');
+        }
+
+        if ((isPast(date)) && !(isToday(date))) {
+            tempTask.labels.push([`${format(date, 'd MMMM')}`, clock, "#F87171"])
         }
 
         tempTask.name = name;

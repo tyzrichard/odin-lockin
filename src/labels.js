@@ -1,7 +1,6 @@
 import school from "./assets/project/school.svg";
 import misc from "./assets/labels/bolt.svg";
 import competition from "./assets/labels/trophy.svg";
-import { rgba } from "@mantine/core";
 
 class Label {
     constructor(name, svg, textColor, bgColor) {
