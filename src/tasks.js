@@ -1,3 +1,5 @@
+import { isPast, isToday } from 'date-fns';
+
 export class Task {
     constructor(name, description = '', priority, project, duedate, labels) {
         this.name = name;
@@ -96,6 +98,19 @@ class TodoList {
             return dateA - dateB;
         });
     }
+
+    filterFutureDates() {
+        return this.days.filter(day => {
+            return (isToday(day.date)) || !(isPast(day.date));
+        });
+    }
+
+    filterPastDates() {
+        return this.days.filter(day => {
+            return (isPast(day.date));
+        });
+    }
+
 }
 
 const todolist = new TodoList();
