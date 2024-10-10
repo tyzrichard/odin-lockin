@@ -43,10 +43,10 @@ class Day {
         return this.tasks.length;
     }
 
-    getNumberOfTasksWithLabel(labelName) {
+    getTasksWithLabel(labelName) {
         let tasksWithLabel = []
         tasksWithLabel = this.tasks.filter(task =>
-            task.labels.some(label => label.name === labelName)
+            task.labels.some(label => label[0] === labelName) // label[0] referring to the label's name.
         );
         return tasksWithLabel.length;
     }
@@ -87,7 +87,6 @@ class TodoList {
             day.removeTask(task.name);
         }
         this.checkAndRemoveDay(day.date);
-        console.log(this.getAllDays());
     }
 
     getTasksByDay(date) {
@@ -122,7 +121,7 @@ class TodoList {
     getNumberOfTasksWithLabel(labelName) {
         let tasksWithLabel = 0
         this.days.forEach(day => {
-            tasksWithLabel += day.getNumberOfTasksWithLabel(labelName)
+            tasksWithLabel += day.getTasksWithLabel(labelName)
         })
         return tasksWithLabel;
     }
