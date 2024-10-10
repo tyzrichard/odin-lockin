@@ -9,6 +9,8 @@ import '@mantine/dates/styles.css';
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
+let page;
+
 document.addEventListener('DOMContentLoaded', () => {
 
     // Sidebar Dialog + Datepicker Intialisation
@@ -17,25 +19,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const pages = {
         "my-tasks": function () {
+            addTitle("My Tasks", "Welcome back, Guest! It's time to Lock In!")
             renderTasks();
         },
 
         upcoming: function () {
+            addTitle("Upcoming Tasks", "Everything for the next week")
             renderLabels();
         },
 
         labels: function () {
+            addTitle("Labels")
             renderLabels();
         },
 
         history: function () {
+            addTitle("History")
             renderLabels();
         },
     }
 
     document.querySelectorAll('.main-option').forEach(option => {
         option.addEventListener('click', function () {
-            const page = this.getAttribute('data-page');
+            page = this.getAttribute('data-page');
             if (pages[page]) {
                 pages[page](); // Call the function for the selected page
             } else {
@@ -43,23 +49,23 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-
-    //Content
-    // const title = document.querySelector('#title')
-    // const myTasksHeader = document.createElement('div');
-    // const myTasksHeader1 = document.createElement('h1');
-    // const myTasksHeader2 = document.createElement('h2');
-    // myTasksHeader1.textContent = "My Tasks";
-    // myTasksHeader2.textContent = "Welcome back, Guest! It's time to Lock In!";
-    // myTasksHeader.appendChild(myTasksHeader1);
-    // myTasksHeader.appendChild(myTasksHeader2);
-    // title.appendChild(myTasksHeader);
-
-    // renderTasks();  // Render tasks on page load
-
-
 });
 
+
+function addTitle(titleText, subtitleText) {
+    const title = document.querySelector('#title')
+    title.innerHTML = '';
+    const myTasksHeader = document.createElement('div');
+    const myTasksHeader1 = document.createElement('h1');
+    myTasksHeader1.textContent = titleText;
+    myTasksHeader.appendChild(myTasksHeader1);
+    if (subtitleText) {
+        const myTasksHeader2 = document.createElement('h2');
+        myTasksHeader2.textContent = subtitleText;
+        myTasksHeader.appendChild(myTasksHeader2);
+    }
+    title.appendChild(myTasksHeader);
+}
 
 function datePickerInitialisation() {
     flatpickr("#date", {
@@ -220,7 +226,9 @@ function addTaskDialogInitialisation() {
         tempTask.date = date;
 
         todolist.addTask(tempTask);
-        renderTasks();
+        if (page == "my-tasks"){
+            renderTasks();
+        }
     });
 }
 
