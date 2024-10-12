@@ -1,6 +1,6 @@
 import { todolist } from './tasks.js';
 import { addDivider } from './svgFunctions.js';
-import { differenceInDays, format, isPast, isToday, isTomorrow, startOfToday } from "date-fns";
+import { differenceInDays, format, isToday, isTomorrow, startOfToday } from "date-fns";
 
 // Function to render tasks in the DOM
 function renderTasks() {
@@ -37,15 +37,19 @@ function renderTasks() {
 
     // Regular adding of dates which are not overdue
     todolistFutureDays.forEach((day) => {
-        addRegularDay(day, listContainer);
+        addRegularDay(day, listContainer, 1);
     })
 }
 
 
-function addRegularDay(day, listContainer) {
+function addRegularDay(day, listContainer, board) {
     // Creates Day Container and Header
     const dayContainer = document.createElement('div');
-    dayContainer.classList.add('day-container')
+    if (board) {
+        dayContainer.classList.add('day-container-board')
+    } else {
+        dayContainer.classList.add('day-container')
+    }
     const dayHeader = document.createElement('div');
     dayHeader.classList.add('day-header');
 
@@ -74,18 +78,24 @@ function addRegularDay(day, listContainer) {
     }
 
     dayContainer.appendChild(dayHeader);
-    addDivider(dayContainer);
+    if (!board) {
+        addDivider(dayContainer);
+    }
     // Actual adding of tasks happens in this function
-    addTasksToDay(day, dayContainer);
+    addTasksToDay(day, dayContainer, board);
     listContainer.appendChild(dayContainer)
 }
 
-function addTasksToDay(day, dayContainer) {
+function addTasksToDay(day, dayContainer, board) { // 0 for list, 1 for board
     const dayTasks = day.getAllTasks();
 
     dayTasks.forEach((task) => {
         const taskContainer = document.createElement('div');
-        taskContainer.classList.add('task-container');
+        if (board) {
+            taskContainer.classList.add('task-container-board');
+        } else {
+            taskContainer.classList.add('task-container');
+        }
 
         // Remove button handling + priority styling
         const removeButton = document.createElement('button');
@@ -154,7 +164,9 @@ function addTasksToDay(day, dayContainer) {
         taskContainer.appendChild(taskInfo);
 
         dayContainer.appendChild(taskContainer);
-        addDivider(dayContainer)
+        if (!board) {
+            addDivider(dayContainer)
+        }
     });
 }
 

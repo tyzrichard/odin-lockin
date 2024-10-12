@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
 
         upcoming: function () {
-            addTitle("Upcoming Tasks", "Everything for the next week")
+            addTitle("Upcoming", "Your Tasks for the next week")
             renderUpcoming();
         },
 
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         history: function () {
             addTitle("History")
-            renderUpcoming();
+            // renderHistory();
         },
     }
 
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    page = "labels";
+    page = "my-tasks";
     pages[page]();
 });
 

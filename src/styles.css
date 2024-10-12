@@ -339,6 +339,13 @@ form {
     gap: 10px;
 }
 
+.day-container-board {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 300px;
+}
+
 .day-header {
     font-size: 16px;
     font-weight: 500;
@@ -351,11 +358,28 @@ form {
     align-items: center;
 }
 
+.task-container-board {
+    display: flex;
+    padding: 20px 15px;
+    gap: 10px;
+    align-items: center;
+    background-color: #1F2937;
+    border: 1px solid #6B7280;
+    border-radius: 15px;
+}
+
 .task-container>button {
     height: 20px;
     width: 20px;
     border-radius: 1000px;
     background-color: #030712;
+}
+
+.task-container-board>button {
+    height: 20px;
+    width: 20px;
+    border-radius: 1000px;
+    background-color: #1F2937;
 }
 
 .priority1 {
