@@ -443,3 +443,20 @@ form {
 .label-count {
     margin-left: auto;
 }
+
+.add-new-label-div {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.add-new-label-div :last-child {
+    font-size: 18px;
+    padding-bottom: 3px;
+}
+
+.add-new-label-div:hover {
+    color: #FB923C;
+}

@@ -44,6 +44,16 @@ function renderLabels() {
         addDivider(labelContainer);
     })
 
+    const addNewLabelDiv = document.createElement("div");
+    addNewLabelDiv.textContent = "Add New Label";
+    const plusSign = document.createElement("div"); // I got lazy, not gonna do that svg stuff all over again :D
+    plusSign.textContent = "+"; 
+    addNewLabelDiv.appendChild(plusSign);
+    addNewLabelDiv.classList.add("add-new-label-div");
+    labelContainer.appendChild(addNewLabelDiv);
+
+    
+
     listContainer.appendChild(labelContainer);
 }
 
