@@ -14,7 +14,13 @@ function renderTasks(board) {
 
     todolist.rearrangeDays();
     const todolistPassedDays = todolist.filterPastDates();
-    const todolistFutureDays = todolist.filterFutureDates();
+    let todolistFutureDays;
+    if (!board) {
+        todolistFutureDays = todolist.filterFutureDates();
+    } else {
+        todolistFutureDays = todolist.filterFutureSevenDates();
+    }
+
 
     // Adds all overdue days under one container if there are any overdue days
     if (todolistPassedDays.length > 0) {
@@ -39,11 +45,15 @@ function renderTasks(board) {
             overdueTasks += day.getNumberOfTasks();
         })
 
-        if (overdueTasks > 1) {
-            overdueHeader.textContent += `Overdue • ${overdueTasks} tasks overdue`
-        } else {
-            overdueHeader.textContent += `Overdue • ${overdueTasks} task overdue`
-        } 
+        overdueHeader.textContent += `Overdue`;
+
+        if (!board) {
+            if (overdueTasks > 1) {
+                overdueHeader.textContent` • ${overdueTasks} tasks overdue`
+            } else {
+                overdueHeader.textContent += ` • ${overdueTasks} task overdue`
+            }
+        }
     }
 
     // Regular adding of dates which are not overdue
@@ -76,15 +86,14 @@ function addRegularDay(day, contentContainer, board) {
 
     if (isToday(day.date)) {
         dayHeader.textContent = `${format(day.date, 'dd MMMM')} • Today`;
-        addDueTasks();
     } else if (isTomorrow(day.date)) {
         dayHeader.textContent = `${format(day.date, 'dd MMMM')} • Tomorrow`;
-        addDueTasks();
     } else if (differenceInDays(startOfToday()) < 7, day.date) {
         dayHeader.textContent = `${format(day.date, 'dd MMMM')} • ${format(day.date, 'iiii')}`
-        addDueTasks();
     } else {
         dayHeader.textContent += `${format(day.date, 'dd MMMM')}`;
+    }
+    if (!board) {
         addDueTasks();
     }
 

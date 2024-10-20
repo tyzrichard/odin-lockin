@@ -1,4 +1,4 @@
-import { isPast, isToday } from 'date-fns';
+import { isPast, isToday, isWithinInterval, addDays } from 'date-fns';
 
 export class Task {
     constructor(name, description = '', priority, project, duedate, labels) {
@@ -110,6 +110,21 @@ class TodoList {
         return this.days.filter(day => {
             return (isToday(day.date)) || !(isPast(day.date));
         });
+    }
+
+    filterFutureSevenDates() {
+        const isDateInNext7Days = (date) => {
+            const today = new Date();
+            const in7Days = addDays(today, 7);
+
+            return isWithinInterval(date, {
+                start: today,
+                end: in7Days,
+            });
+        };
+        return this.filterFutureDates().filter(day => {
+            return (isToday(day.date) || isDateInNext7Days(day.date));
+        })
     }
 
     filterPastDates() {
