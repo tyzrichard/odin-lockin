@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         upcoming: function () {
             addTitle("Upcoming", "Your Tasks for the next week")
-            renderUpcoming();
+            renderTasks(1);
         },
 
         labels: function () {
@@ -235,9 +235,11 @@ function addTaskDialogInitialisation() {
         tempTask.date = date;
 
         todolist.addTask(tempTask);
-        if (page == "my-tasks"){
+        if (page == "my-tasks") {
             renderTasks();
-        } else if (page == "labels"){
+        } else if (page == "upcoming") {
+            renderTasks(1);
+        } else if (page == "labels") {
             renderLabels();
         }
     });

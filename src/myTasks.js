@@ -3,9 +3,14 @@ import { addDivider } from './svgFunctions.js';
 import { differenceInDays, format, isToday, isTomorrow, startOfToday } from "date-fns";
 
 // Function to render tasks in the DOM
-function renderTasks() {
-    const listContainer = document.getElementById('content');
-    listContainer.innerHTML = '';  // Clear the previous task list
+function renderTasks(board) {
+    let contentContainer = document.querySelector('.content');
+    if (board) {
+        contentContainer.classList.add("content-board");
+    } else {
+        contentContainer.classList.remove("content-board");
+    }
+    contentContainer.innerHTML = '';  // Clear the previous task list
 
     todolist.rearrangeDays();
     const todolistPassedDays = todolist.filterPastDates();
@@ -15,7 +20,7 @@ function renderTasks() {
     if (todolistPassedDays.length > 0) {
         const overdueContainer = document.createElement('div');
         overdueContainer.classList.add('day-container')
-        listContainer.insertBefore(overdueContainer, listContainer.firstChild);
+        contentContainer.insertBefore(overdueContainer, contentContainer.firstChild);
 
         const overdueHeader = document.createElement('div');
         overdueHeader.classList.add('day-header');
@@ -37,12 +42,12 @@ function renderTasks() {
 
     // Regular adding of dates which are not overdue
     todolistFutureDays.forEach((day) => {
-        addRegularDay(day, listContainer, 1);
+        addRegularDay(day, contentContainer, board);
     })
 }
 
 
-function addRegularDay(day, listContainer, board) {
+function addRegularDay(day, contentContainer, board) {
     // Creates Day Container and Header
     const dayContainer = document.createElement('div');
     if (board) {
@@ -83,7 +88,7 @@ function addRegularDay(day, listContainer, board) {
     }
     // Actual adding of tasks happens in this function
     addTasksToDay(day, dayContainer, board);
-    listContainer.appendChild(dayContainer)
+    contentContainer.appendChild(dayContainer)
 }
 
 function addTasksToDay(day, dayContainer, board) { // 0 for list, 1 for board

@@ -3,7 +3,7 @@ import { todolist } from "./tasks";
 import { addDivider } from "./svgFunctions";
 
 function renderLabels() {
-    const listContainer = document.getElementById('content');
+    const listContainer = document.querySelector('.content');
     listContainer.innerHTML = '';
 
     const labelContainer = document.createElement("div");

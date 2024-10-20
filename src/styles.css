@@ -68,13 +68,19 @@ body {
     flex-grow: 1;
     gap: 30px;
     background-color: #030712;
+    width: 75%;
 }
 
-#content {
+.content {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     gap: 50px;
+}
+
+.content-board {
+    flex-direction: row;
+    overflow-x: auto;
 }
 
 h1 {
@@ -101,7 +107,7 @@ h4 {
 
 #sidebar {
     background-color: #111827;
-    width: 27%;
+    width: 25%;
     display: flex;
     flex-direction: column;
     padding: 40px 30px;
@@ -344,6 +350,7 @@ form {
     flex-direction: column;
     gap: 20px;
     width: 300px;
+    flex-shrink: 0
 }
 
 .day-header {
