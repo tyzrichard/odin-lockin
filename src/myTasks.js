@@ -49,7 +49,7 @@ function renderTasks(board) {
 
         if (!board) {
             if (overdueTasks > 1) {
-                overdueHeader.textContent` • ${overdueTasks} tasks overdue`
+                overdueHeader.textContent += ` • ${overdueTasks} tasks overdue`
             } else {
                 overdueHeader.textContent += ` • ${overdueTasks} task overdue`
             }
