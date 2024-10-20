@@ -19,17 +19,23 @@ function renderTasks(board) {
     // Adds all overdue days under one container if there are any overdue days
     if (todolistPassedDays.length > 0) {
         const overdueContainer = document.createElement('div');
-        overdueContainer.classList.add('day-container')
+        if (board) {
+            overdueContainer.classList.add('day-container-board')
+        } else {
+            overdueContainer.classList.add('day-container')
+        }
         contentContainer.insertBefore(overdueContainer, contentContainer.firstChild);
 
         const overdueHeader = document.createElement('div');
         overdueHeader.classList.add('day-header');
         let overdueTasks = 0;
         overdueContainer.appendChild(overdueHeader);
-        addDivider(overdueContainer);
+        if (!board) {
+            addDivider(overdueContainer);
+        }
 
         todolistPassedDays.forEach((day) => {
-            addTasksToDay(day, overdueContainer);
+            addTasksToDay(day, overdueContainer, board);
             overdueTasks += day.getNumberOfTasks();
         })
 
