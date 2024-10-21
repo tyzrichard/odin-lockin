@@ -339,7 +339,7 @@ form {
 }
 
 /* My Tasks */
-.day-container {
+.day-container, .label-container {
     display: flex;
     flex-direction: column;
     gap: 10px;

@@ -7,7 +7,7 @@ function renderLabels() {
     listContainer.innerHTML = '';
 
     const labelContainer = document.createElement("div");
-    labelContainer.classList.add('day-container');
+    labelContainer.classList.add('label-container');
 
     const labelsSummary = document.createElement("div");
     labelsSummary.textContent = `Showing ${labelList.getNumberOfLabels()} Labels`

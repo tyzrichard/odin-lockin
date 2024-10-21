@@ -3,7 +3,6 @@ import { todolist, Task } from "./tasks.js";
 import { renderTasks } from './myTasks.js';
 import { labelList } from "./labels.js";
 import { renderLabels } from "./labelsPage.js";
-import { renderUpcoming } from "./upcomingPage.js";
 import { changeSvgColor, hexToRgb } from "./svgFunctions.js";
 import clock from "./assets/labels/clock.svg";
 import { isPast, isToday, startOfToday, format } from "date-fns";
