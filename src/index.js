@@ -71,8 +71,10 @@ function addTitle(titleText, subtitleText) {
     title.appendChild(myTasksHeader);
 }
 
+let Datepicker;
+
 function datePickerInitialisation() {
-    flatpickr("#date", {
+    Datepicker = flatpickr("#date", {
         altInput: true,
         altFormat: "F j, Y",
         dateFormat: "Y-m-d",
@@ -80,7 +82,8 @@ function datePickerInitialisation() {
     });
 }
 
-function addTaskDialogInitialisation() {
+
+export function addTaskDialogInitialisation() {
     // Task for the current iteration
     let tempTask;
 
@@ -201,7 +204,9 @@ function addTaskDialogInitialisation() {
         changePriorityFlagColour();
         checkInputs();
         resetSelectedLabels();
+        Datepicker.clear();
     });
+
 
     // Close and Submit buttons
     closeButton.addEventListener('click', () => {

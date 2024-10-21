@@ -1,5 +1,6 @@
 import { todolist } from './tasks.js';
 import { addDivider } from './svgFunctions.js';
+import { addTaskDialogInitialisation } from './index.js';
 import { differenceInDays, format, isToday, isTomorrow, startOfToday } from "date-fns";
 
 // Function to render tasks in the DOM
@@ -180,6 +181,11 @@ function addTasksToDay(day, dayContainer, board) { // 0 for list, 1 for board
             taskInfo.appendChild(labelContainer);
         }
 
+        const addNewTaskButton = document.querySelector(".new-task");
+
+        taskInfo.addEventListener("click", () => {
+            addNewTaskButton.click();
+        })
 
         taskContainer.appendChild(taskInfo);
 
