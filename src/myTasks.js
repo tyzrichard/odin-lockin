@@ -1,6 +1,6 @@
 import { todolist } from './tasks.js';
 import { addDivider } from './svgFunctions.js';
-import { addTaskDialogInitialisation } from './index.js';
+import { taskToRemove } from './index.js';
 import { differenceInDays, format, isToday, isTomorrow, startOfToday } from "date-fns";
 
 // Function to render tasks in the DOM
@@ -185,6 +185,7 @@ function addTasksToDay(day, dayContainer, board) { // 0 for list, 1 for board
 
         taskInfo.addEventListener("click", () => {
             addNewTaskButton.click();
+            changeTaskInfo(task);
         })
 
         taskContainer.appendChild(taskInfo);
@@ -194,6 +195,19 @@ function addTasksToDay(day, dayContainer, board) { // 0 for list, 1 for board
             addDivider(dayContainer)
         }
     });
+}
+
+function changeTaskInfo(task) {
+    taskToRemove.value = task.name;
+    taskToRemove.date = task.date;
+
+    const taskName = document.getElementById("task_name");
+    taskName.value = task.name;
+
+    const taskDesc = document.getElementById("desc");
+    taskDesc.value = task.description;
+
+    const priorityDropdown = document
 }
 
 

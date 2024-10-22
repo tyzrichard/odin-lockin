@@ -439,6 +439,7 @@ form {
 
 .label-container {
     display: flex;
+    flex-direction: row;
     gap: 15px;
     font-size: 12px;
     font-weight: 300;

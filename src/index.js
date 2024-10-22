@@ -82,6 +82,11 @@ function datePickerInitialisation() {
     });
 }
 
+export let taskToRemove = {
+    value: null,
+    date: null
+};
+
 
 export function addTaskDialogInitialisation() {
     // Task for the current iteration
@@ -198,6 +203,8 @@ export function addTaskDialogInitialisation() {
 
     // Stuff that happens whenever you bring up the form
     addNewTaskButton.addEventListener("click", () => {
+        taskToRemove.value = null;
+        taskToRemove.date = null;
         dialog.showModal();
         form.reset();
         tempTask = new Task();
@@ -239,6 +246,11 @@ export function addTaskDialogInitialisation() {
         tempTask.date = date;
 
         todolist.addTask(tempTask);
+
+        if (taskToRemove.value) {
+            todolist.removeTaskFromDayByName(taskToRemove.date, taskToRemove.value)
+        }
+
         if (page == "my-tasks") {
             renderTasks();
         } else if (page == "upcoming") {

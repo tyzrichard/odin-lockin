@@ -82,6 +82,14 @@ class TodoList {
         }
     }
 
+    removeTaskFromDayByName(dayName, taskName) {
+        const day = this.findDay(dayName);
+        if (day) {
+            day.removeTask(taskName);
+        }
+        this.checkAndRemoveDay(day.date);
+    }
+
     removeTaskFromDay(day, task) {
         if (day) {
             day.removeTask(task.name);
