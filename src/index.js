@@ -84,7 +84,8 @@ function datePickerInitialisation() {
 
 export let taskToRemove = {
     value: null,
-    date: null
+    date: null,
+    labels: null
 };
 
 
@@ -127,6 +128,7 @@ export function addTaskDialogInitialisation() {
         }
     }
     taskname.addEventListener('input', checkInputs);
+    
 
     // Using JS to render the label button/selectors into the form
     function renderLabelButtons() {
@@ -205,6 +207,10 @@ export function addTaskDialogInitialisation() {
     addNewTaskButton.addEventListener("click", () => {
         taskToRemove.value = null;
         taskToRemove.date = null;
+        const submitButton = document.querySelector(".submitDialog");
+        submitButton.textContent = "Add Task";
+        const addLabels = document.querySelector(".add-labels");
+        addLabels.textContent = "Add Labels";
         dialog.showModal();
         form.reset();
         tempTask = new Task();
@@ -245,11 +251,11 @@ export function addTaskDialogInitialisation() {
         tempTask.project = project;
         tempTask.date = date;
 
-        todolist.addTask(tempTask);
-
         if (taskToRemove.value) {
             todolist.removeTaskFromDayByName(taskToRemove.date, taskToRemove.value)
         }
+
+        todolist.addTask(tempTask);
 
         if (page == "my-tasks") {
             renderTasks();

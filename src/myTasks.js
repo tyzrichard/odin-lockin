@@ -200,6 +200,8 @@ function addTasksToDay(day, dayContainer, board) { // 0 for list, 1 for board
 function changeTaskInfo(task) {
     taskToRemove.value = task.name;
     taskToRemove.date = task.date;
+    taskToRemove.labels = task.labels;
+    console.log(taskToRemove.labels)
 
     const taskName = document.getElementById("task_name");
     taskName.value = task.name;
@@ -207,7 +209,29 @@ function changeTaskInfo(task) {
     const taskDesc = document.getElementById("desc");
     taskDesc.value = task.description;
 
-    const priorityDropdown = document
+    const priorityDropdown = document.getElementById("priority");
+    priorityDropdown.value = task.priority;
+
+    const taskDate = document.getElementById("date");
+    taskDate.value = task.date;
+
+    const addLabels = document.querySelector(".add-labels");
+    addLabels.textContent = "Edit Labels";
+
+    const labelButtons = document.querySelector(".form-labels");
+    task.labels.forEach((label) => {
+        if (label[0] == "School") {
+            labelButtons.firstChild.click();
+        } else if (label[0] == "Misc") {
+            labelButtons.children[1].click();
+        } else {
+            labelButtons.children[2].click();
+        }
+    })
+
+    const submitButton = document.querySelector(".submitDialog");
+    submitButton.textContent = "Save";
+    submitButton.disabled = false;
 }
 
 
